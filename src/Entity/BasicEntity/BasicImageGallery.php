@@ -22,10 +22,10 @@ class BasicImageGallery
     private ?string $imageTitle = null;
 
     #[ORM\Column(type:'integer', nullable: true)]
-    protected $imageOrder;
+    protected $imageOrder = null;
 
     #[ORM\Column]
-    private ?bool $isActive = null;
+    private ?bool $isActive = false;
 
     public function getId(): ?int
     {
