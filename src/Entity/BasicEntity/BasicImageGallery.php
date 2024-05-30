@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity\BasicEntity;
 
+use App\Entity\BasicEntity\VichUploaderImage;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 
 #[MappedSuperclass]
-class BasicImageGallery
+class BasicImageGallery extends VichUploaderImage
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
