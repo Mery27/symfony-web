@@ -31,6 +31,9 @@ class Seo
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $canonical = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $hideInSitemap = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +107,18 @@ class Seo
     public function setCanonical(?string $canonical): static
     {
         $this->canonical = $canonical;
+
+        return $this;
+    }
+
+    public function isHideInSitemap(): ?bool
+    {
+        return $this->hideInSitemap;
+    }
+
+    public function setHideInSitemap(?bool $hideInSitemap): static
+    {
+        $this->hideInSitemap = $hideInSitemap;
 
         return $this;
     }
