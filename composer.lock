@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "378e3cc5dfb14d7d3e1f908b8a1ed930",
+    "content-hash": "01d0f6a3117f6e117bd529668d058c5f",
     "packages": [
         {
             "name": "composer/semver",
@@ -9615,16 +9615,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.59.1",
+            "version": "v1.60.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "b87b1b25c607a8a50832395bc751c784946a0350"
+                "reference": "c305a02a22974670f359d4274c9431e1a191f559"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/b87b1b25c607a8a50832395bc751c784946a0350",
-                "reference": "b87b1b25c607a8a50832395bc751c784946a0350",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/c305a02a22974670f359d4274c9431e1a191f559",
+                "reference": "c305a02a22974670f359d4274c9431e1a191f559",
                 "shasum": ""
             },
             "require": {
@@ -9687,7 +9687,7 @@
             ],
             "support": {
                 "issues": "https://github.com/symfony/maker-bundle/issues",
-                "source": "https://github.com/symfony/maker-bundle/tree/v1.59.1"
+                "source": "https://github.com/symfony/maker-bundle/tree/v1.60.0"
             },
             "funding": [
                 {
@@ -9703,7 +9703,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-05-06T03:59:59+00:00"
+            "time": "2024-06-10T06:03:18+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
@@ -9929,5 +9929,5 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
