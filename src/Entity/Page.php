@@ -31,7 +31,7 @@ class Page
     private ?string $body = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?seo $seo = null;
+    private ?Seo $seo = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?OGTags $ogTags = null;
@@ -92,12 +92,12 @@ class Page
         return $this;
     }
 
-    public function getSeo(): ?seo
+    public function getSeo(): ?Seo
     {
         return $this->seo;
     }
 
-    public function setSeo(?seo $seo): static
+    public function setSeo(?Seo $seo): static
     {
         $this->seo = $seo;
 
