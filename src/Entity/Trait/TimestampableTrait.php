@@ -8,7 +8,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\HasLifecycleCallbacks]
-trait TimestableTimestampableTrait
+trait TimestampableTrait
 {
     /**
      * @var DateTime datum vytvoření stránky

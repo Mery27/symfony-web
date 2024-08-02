@@ -2,13 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\PageRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PageRepository;
+use App\Entity\Trait\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
 class Page
 {
+
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
