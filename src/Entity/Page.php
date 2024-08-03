@@ -8,6 +8,7 @@ use App\Repository\PageRepository;
 use App\Entity\Trait\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Page
 {
 
@@ -121,7 +122,7 @@ class Page
         return $this->isPublished;
     }
 
-    public function setPublished(?bool $isPublished): static
+    public function setIsPublished(?bool $isPublished): static
     {
         $this->isPublished = $isPublished;
 
