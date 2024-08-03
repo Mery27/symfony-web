@@ -4,30 +4,27 @@ declare(strict_types=1);
 
 namespace App\Entity\Trait;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
+/** 
+ * Add createdAt and updatedAt properties to the entity.
+ * IMPORTANT! You need #[ORM\HasLifecycleCallbacks] to the entity used this trait.
+*/
 #[ORM\HasLifecycleCallbacks]
 trait TimestampableTrait
 {
-    /**
-     * @var DateTime datum vytvoření stránky
-     */
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private $createdAt;
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $createdAt = null;
 
-    /**
-     * @var DateTime datum poslední úpravy stránky
-     */
-    #[ORM\Column(type: 'datetime', nullable: true)]
-    private $updatedAt;
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
-    
+
     #[ORM\PrePersist]
     #[ORM\PreUpdate]
     public function updatedTimestamps(): void
     {
-        $dateNow = new DateTime('now');
+        $dateNow = new \DateTimeImmutable('now');
 
         $this->updatedAt = $dateNow;
 
@@ -36,29 +33,27 @@ trait TimestampableTrait
         }
     }
 
-    public function getCreatedAt(): ?DateTime
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    /**
-     * @param DateTime|null $createdAt
-     */
-    public function setCreatedAt(DateTime $createdAt): void
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
+        return $this;
     }
 
-    public function getUpdatedAt(): ?DateTime
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    /**
-     * @param DateTime|null $updatedAt
-     */
-    public function setUpdatedAt(DateTime $updatedAt): void
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 }
