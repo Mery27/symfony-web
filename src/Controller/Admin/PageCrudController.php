@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Page;
 use App\Form\SeoFormType;
+use App\Form\OGTagsFormType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -15,7 +16,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class PageCrudController extends AbstractCrudController
 {
@@ -35,11 +35,19 @@ class PageCrudController extends AbstractCrudController
         $createdAt = DateTimeField::new('createdAt', 'Vytvořeno');
         $isPublished = BooleanField::new('isPublished', 'Aktivní');
 
-        // $seo = CollectionField::new('seo', 'SEO')
-        //     ->allowAdd(true)
-        //     ->setEntryIsComplex(true)
-        //     ->setEntryType(SeoFormType::class);
-        // $ogTags = AssociationField::new('ogTags', 'OG tags');
+        $seo = CollectionField::new('seoCrud', 'SEO')
+            ->allowAdd(true)
+            ->renderExpanded()
+            ->allowDelete(false)
+            ->setEntryIsComplex(true)
+            ->setEntryType(SeoFormType::class);
+
+        $ogTags = CollectionField::new('ogTagsCrud', 'OG tags')
+            ->allowAdd(true)
+            ->renderExpanded()
+            ->allowDelete(false)
+            ->setEntryIsComplex(true)
+            ->setEntryType(OGTagsFormType::class);
         
         if (Action::EDIT === $pageName || Action::NEW === $pageName) {
             return [
@@ -53,9 +61,9 @@ class PageCrudController extends AbstractCrudController
                 FormField::addTab('Obsah'),
                 $body,
                 FormField::addTab('Seo'),
-                // $seo,
+                $seo,
                 FormField::addTab('OG tags'),
-                // $ogTags,
+                $ogTags,
                 FormField::addTab('ID'),
                 $id,
             ];
@@ -76,7 +84,6 @@ class PageCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        dump($crud);
         return $crud
         ->showEntityActionsInlined()
         ->setPageTitle(Crud::PAGE_INDEX, 'Seznam stránek')

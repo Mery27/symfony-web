@@ -33,10 +33,10 @@ class Page
     #[ORM\Column(type: Types::TEXT)]
     private ?string $body = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'], targetEntity: Seo::class)]
     private ?Seo $seo = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'], targetEntity: OGTags::class)]
     private ?OGTags $ogTags = null;
 
     #[ORM\Column(nullable: true)]
@@ -95,13 +95,34 @@ class Page
         return $this;
     }
 
-    public function getSeo(): ?Seo
+    public function getSeo(): Seo|array|null
     {
         return $this->seo;
     }
 
-    public function setSeo(?Seo $seo): static
+    public function setSeo(Seo|array|null $seo): static
     {
+        // if (is_array($seo)) {
+        //     $seo = $seo[0];
+        // }
+
+        $this->seo = $seo;
+
+        return $this;
+    }
+
+    // Hack to use CollectionField in PageCrudController, which work with collection array
+    public function getSeoCrud(): ?array
+    {
+        return $this->seo ? [$this->seo] : [];
+    }
+
+    public function setSeoCrud(Seo|array|null $seo): static
+    {
+        if (is_array($seo)) {
+            $seo = $seo[0];
+        }
+
         $this->seo = $seo;
 
         return $this;
@@ -114,6 +135,23 @@ class Page
 
     public function setOgTags(?OGTags $ogTags): static
     {
+        $this->ogTags = $ogTags;
+
+        return $this;
+    }
+
+    // Hack to use CollectionField in PageCrudController, which work with collection array
+    public function getOgTagsCrud(): ?array
+    {
+        return $this->ogTags ? [$this->ogTags] : [];
+    }
+
+    public function setOgTagsCrud(OGTags|array|null $ogTags): static
+    {
+        if (is_array($ogTags)) {
+            $ogTags = $ogTags[0];
+        }
+
         $this->ogTags = $ogTags;
 
         return $this;
