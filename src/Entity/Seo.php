@@ -34,6 +34,10 @@ class Seo
     #[ORM\Column(nullable: true)]
     private ?bool $hideInSitemap = null;
 
+    public function __tostring() {
+        return $this->title;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
