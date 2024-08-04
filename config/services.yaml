@@ -6,6 +6,8 @@
 parameters:
     page_name: 'Symfony'
     default_locale: cs_CZ
+    date_format_long: 'M.d.yyyy HH:mm' #20.1.2024 00:05
+    date_format_short: 'M.d.yyyy' #20.1.2024
 
 services:
     # default configuration for services in *this* file

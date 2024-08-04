@@ -93,7 +93,7 @@ class PageCrudController extends AbstractCrudController
         ->setPageTitle(Crud::PAGE_EDIT, 'Upravit stránku')
         ->setEntityLabelInSingular('Stránka')
         ->setDefaultSort(['createdAt' => 'DESC'])
-        ->setDateTimeFormat('M.d.yyyy k:m')
+        ->setDateTimeFormat($this->getParameter('date_format_long'))
         ;
     }
 
