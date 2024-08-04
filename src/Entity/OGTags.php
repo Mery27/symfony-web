@@ -34,6 +34,11 @@ class OGTags
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
+    public function __tostring(): string
+    {
+        return 'og:title - ' . $this->title;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

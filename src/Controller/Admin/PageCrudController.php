@@ -7,6 +7,7 @@ use App\Form\SeoFormType;
 use App\Form\OGTagsFormType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -36,6 +37,7 @@ class PageCrudController extends AbstractCrudController
         $isPublished = BooleanField::new('isPublished', 'Aktivní');
 
         $seo = CollectionField::new('seoCrud', 'SEO')
+            ->addCssClass('only-one-form-in-collection')
             ->allowAdd(true)
             ->renderExpanded()
             ->allowDelete(false)
@@ -43,6 +45,7 @@ class PageCrudController extends AbstractCrudController
             ->setEntryType(SeoFormType::class);
 
         $ogTags = CollectionField::new('ogTagsCrud', 'OG tags')
+            ->addCssClass('only-one-form-in-collection')
             ->allowAdd(true)
             ->renderExpanded()
             ->allowDelete(false)
@@ -119,5 +122,12 @@ class PageCrudController extends AbstractCrudController
                 return $action->setIcon('fa-solid fa-trash-can')->setLabel(false)->addCssClass('text-danger')->setHtmlAttributes(['title' => 'Smazat']);
             })
         ;
+    }
+
+    public function configureAssets(Assets $assets): Assets
+    {
+        return $assets
+            ->addAssetMapperEntry('one-form-collection-field')
+            ;
     }
 }
