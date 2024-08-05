@@ -1,0 +1,29 @@
+{% extends "admin/crud_fields/layout/_modal_field.html.twig" %}
+
+{% block body %}
+    {% for ogtags in field.value %}
+        <p>Title: <br>
+            <b>{{ ogtags.title }}</b>
+        </p>
+        <hr>
+        <p>Description: <br>
+            <b>{{ ogtags.description }}</b>
+        </p>
+        <hr>
+        <p>Type: {{ ogtags.type }}
+        </p>
+        <hr>
+        <p>Locale: {{ ogtags.locale }}</p>
+        <hr>
+        <p>URL: {{ ogtags.url }}</p>
+        <hr>
+        <p>Site name: <b>{{ ogtags.siteName }}</b></p>
+        <hr>
+        <p>Image url: <br>
+            <a href="{{ ogtags.image }}" target="_blank">{{ ogtags.image }}</a>
+        </p>
+        {% if ogtags.image %}
+            <img src="{{ asset(ogtags.image) }}" style="max-width: 200px; heigth: auto">
+        {% endif %}
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,5 @@
+{# 
+    Render both createdAt and updatedAt in one column 
+#}
+<small>Změněno: <b>{{ field.value|format_date('long') }}</b></small><br>
+<small>Vytvořeno: {{ entity.instance.createdAt|format_date('short') }}</small>

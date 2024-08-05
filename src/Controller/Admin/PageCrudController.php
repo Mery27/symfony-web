@@ -74,10 +74,12 @@ class PageCrudController extends AbstractCrudController
 
         if (Action::INDEX === $pageName) {
             return [
-                $title,
-                $url,
-                $updatedAt,
-                $createdAt,
+                $title->setTemplatePath('admin/crud_fields/title_with_url_field.html.twig'),
+                $shortBody->setTemplatePath('admin/crud_fields/modal_text_field.html.twig'),
+                $body->setTemplatePath('admin/crud_fields/modal_text_field.html.twig'),
+                $seo->setTemplatePath('admin/crud_fields/page/seo_modal_collection_field.html.twig'),
+                $ogTags->setTemplatePath('admin/crud_fields/page/ogtags_modal_collection_field.html.twig'),
+                $updatedAt->setTemplatePath('admin/crud_fields/timestampable_field.html.twig'),
                 $isPublished,
             ];
         }
