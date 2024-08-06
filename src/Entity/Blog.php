@@ -17,7 +17,7 @@ class Blog extends BasicPage
     /**
      * @var Collection<int, Tag>
      */
-    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'blogs')]
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'blogs', cascade: ['persist', 'detach'])]
     private Collection $tag;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

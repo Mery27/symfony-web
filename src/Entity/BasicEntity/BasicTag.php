@@ -29,6 +29,11 @@ class BasicTag
     #[ORM\OneToOne(targetEntity: Seo::class, cascade: ['persist', 'remove'])]
     private ?Seo $seo = null;
 
+    public function __tostring(): string
+    {
+        return $this->title . ' - id: ' . (string) $this->id;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
