@@ -2,7 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Blog;
 use App\Entity\Page;
+use App\Entity\Tag;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,7 +43,11 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::section('Typy stránek');
         yield MenuItem::linkToCrud('Stránky', 'fas fa-list', Page::class);
+        yield MenuItem::linkToCrud('Články', 'fa-regular fa-file-lines', Blog::class);
+        yield MenuItem::linkToCrud('Štítky', 'fa-solid fa-tags', Tag::class);
+        yield MenuItem::section('Nastavení pro články');
     }
 
 }
