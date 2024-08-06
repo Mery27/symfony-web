@@ -104,28 +104,21 @@ class BasicPage
 
     public function setSeo(Seo|array|null $seo): static
     {
-        // if (is_array($seo)) {
-        //     $seo = $seo[0];
-        // }
-
         $this->seo = $seo;
 
         return $this;
     }
 
-    // Hack to use CollectionField in PageCrudController, which work with collection array
+    // Hook to use CollectionField in CrudController, which work with collection array
     public function getSeoCrud(): ?array
     {
-        return $this->seo ? [$this->seo] : [];
+        return $this->objectInArray($this->seo);
     }
 
+    // Hook to use CollectionField in CrudController, which work with collection array
     public function setSeoCrud(Seo|array|null $seo): static
     {
-        if (is_array($seo)) {
-            $seo = $seo[0];
-        }
-
-        $this->seo = $seo;
+        $this->seo = $this->arrayToDefaultValue($seo);
 
         return $this;
     }
@@ -142,19 +135,16 @@ class BasicPage
         return $this;
     }
 
-    // Hack to use CollectionField in PageCrudController, which work with collection array
+    // Hook to use CollectionField in CrudController, which work with collection array
     public function getOgTagsCrud(): ?array
     {
-        return $this->ogTags ? [$this->ogTags] : [];
+        return $this->objectInArray($this->ogTags);
     }
 
+    // Hook to use CollectionField in CrudController, which work with collection array
     public function setOgTagsCrud(OGTags|array|null $ogTags): static
     {
-        if (is_array($ogTags)) {
-            $ogTags = $ogTags[0];
-        }
-
-        $this->ogTags = $ogTags;
+        $this->ogTags = $this->arrayToDefaultValue($ogTags);
 
         return $this;
     }
@@ -169,5 +159,32 @@ class BasicPage
         $this->isPublished = $isPublished;
 
         return $this;
+    }
+
+    /**
+     * HOOK Use for OneToOne collection field in easyadmin crud controller
+     * 
+     * For collection field in crud controller which must have only one form,
+     * we need convert array back to the object or null.
+     * We accept only first element from array collection.
+     */
+    private function arrayToDefaultValue(Seo|array|null $element): Seo|array|null
+    {
+        if (is_array($element)) {
+             return !empty($element) ? $element[0] : null;
+        }
+
+        return $element;
+    }
+
+    /**
+     * HOOK Use for OneToOne collection field in easyadmin crud controller
+     * 
+     * For collection field in crud controller which must have only one form.
+     * When we need load object for edit form, we must return object in array.
+     */
+    private function objectInArray(?object $object): ?array
+    {
+        return $object ? [$object] : [];
     }
 }
