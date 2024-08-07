@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\SeoRepository;
@@ -34,8 +36,9 @@ class Seo
     #[ORM\Column(nullable: true)]
     private ?bool $hideInSitemap = null;
 
-    public function __tostring() {
-        return $this->title;
+    public function __tostring():string
+    {
+        return $this->title ?? (string) $this->id;
     }
 
     public function getId(): ?int

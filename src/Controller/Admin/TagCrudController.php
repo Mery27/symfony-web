@@ -26,7 +26,7 @@ class TagCrudController extends AbstractCrudController
         $url = TextField::new('url');
         $description = TextEditorField::new('description');
 
-        $seo = CollectionField::new('seoTag', 'SEO')
+        $seo = CollectionField::new('seoCrud', 'SEO')
             ->addCssClass('only-one-form-in-collection')
             ->allowAdd(true)
             ->renderExpanded()
