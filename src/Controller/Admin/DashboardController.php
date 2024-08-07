@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Blog;
+use App\Entity\BlogCategory;
 use App\Entity\Page;
 use App\Entity\Tag;
 use Doctrine\ORM\EntityManagerInterface;
@@ -36,7 +37,7 @@ class DashboardController extends AbstractDashboardController
         $pageName = $this->getParameter('page_name');
 
         return Dashboard::new()
-            ->setTitle("Administrace stránek - {$pageName}")
+            ->setTitle("Administrace<br><small class='text-secondary'>{$pageName}</small>")
             ;
     }
 
@@ -44,10 +45,11 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::section('Typy stránek');
-        yield MenuItem::linkToCrud('Stránky', 'fas fa-list', Page::class);
+        yield MenuItem::linkToCrud('Stránky', 'fa-regular fa-file', Page::class);
         yield MenuItem::linkToCrud('Články', 'fa-regular fa-file-lines', Blog::class);
         yield MenuItem::linkToCrud('Štítky', 'fa-solid fa-tags', Tag::class);
         yield MenuItem::section('Nastavení pro články');
+        yield MenuItem::linkToCrud('Kategorie článků', 'fa-solid fa-list', BlogCategory::class);
     }
 
 }
