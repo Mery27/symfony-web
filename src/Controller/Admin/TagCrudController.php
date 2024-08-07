@@ -22,9 +22,9 @@ class TagCrudController extends AbstractCrudController
     }
     public function configureFields(string $pageName): iterable
     {
-        $title = TextField::new('title');
-        $url = TextField::new('url');
-        $description = TextEditorField::new('description');
+        $title = TextField::new('title', 'Název kategorie');
+        $url = TextField::new('url', 'URL adresa');
+        $description = TextEditorField::new('description', 'Popis kategorie');
 
         $seo = CollectionField::new('seoCrud', 'SEO')
             ->addCssClass('only-one-form-in-collection')
@@ -74,12 +74,19 @@ class TagCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        // Rewrite default Detail action to redirect to the app_page_show route
+        $showAction = Action::new('detail', 'Zobrazit')
+            ->linkToRoute('app_tag_show', function (Tag $tag): array {
+                return [
+                    'url' =>  $tag->getUrl(),
+                ];
+            });
 
         return $actions
             ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
                 return $action->setLabel('Vytvořit článek');
             })
-            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->add(Crud::PAGE_INDEX, $showAction)
             ->update(Crud::PAGE_INDEX, Action::DETAIL, function (Action $action) {
                 return $action->setIcon('fas fa-eye')->setLabel(false)->addCssClass('text-secondary')->setHtmlAttributes(['title' => 'Zobrazit']);
             })

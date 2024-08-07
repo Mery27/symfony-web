@@ -3,6 +3,7 @@
 namespace App\Entity\BasicEntity;
 
 use App\Entity\Seo;
+use App\Entity\Trait\SeoFormCollectionFieldTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\MappedSuperclass;
@@ -12,6 +13,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[UniqueEntity('url', 'Tato "{{ value }}" url adresa se už používá. Zadejte prosím jinou.')]
 class BasicCategory
 {
+    use SeoFormCollectionFieldTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -28,6 +31,11 @@ class BasicCategory
 
     #[ORM\OneToOne(targetEntity: Seo::class, cascade: ['persist', 'remove'])]
     private ?Seo $seo = null;
+
+    public function __tostring(): string
+    {
+        return $this->title;
+    }
 
     public function getId(): ?int
     {
@@ -77,22 +85,6 @@ class BasicCategory
 
     public function setSeo(?Seo $seo): static
     {
-        $this->seo = $seo;
-
-        return $this;
-    }
-
-    public function getSeoCategory(): ?array
-    {
-        return $this->seo ? [$this->seo] : [];
-    }
-
-    public function setSeoCategory(Seo|array|null $seo): static
-    {
-        if (is_array($seo)) {
-            $seo = $seo[0];
-        }
-
         $this->seo = $seo;
 
         return $this;

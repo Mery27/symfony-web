@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\Blog;
 use App\Form\SeoFormType;
 use App\Form\OGTagsFormType;
-use App\Form\TagFormType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -17,8 +16,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class BlogCrudController extends AbstractCrudController
 {
@@ -37,8 +36,10 @@ class BlogCrudController extends AbstractCrudController
         $updatedAt = DateTimeField::new('updatedAt', 'Aktualizováno');
         $createdAt = DateTimeField::new('createdAt', 'Vytvořeno');
         $isPublished = BooleanField::new('isPublished', 'Aktivní');
-        $tag = AssociationField::new('tag', 'Štítky')
+        $category = AssociationField::new('category', 'Kategorie')
             ->autocomplete();
+        $tag = AssociationField::new('tag', 'Štítky')
+        ->autocomplete();
 
         $seo = CollectionField::new('seoCrud', 'SEO')
             ->addCssClass('only-one-form-in-collection')
@@ -62,6 +63,7 @@ class BlogCrudController extends AbstractCrudController
                 $title,
                 $url,
                 $shortBody,
+                $category,
                 $tag,
                 $updatedAt,
                 $createdAt,
@@ -111,9 +113,7 @@ class BlogCrudController extends AbstractCrudController
         $showAction = Action::new('detail', 'Zobrazit')
             ->linkToRoute('app_blog_show', function (Blog $blog): array {
                 return [
-                    // TODO: dont create right link to blog show page
-                    // generate /<title> but right is /blog/<title>
-                    'url' => $blog->getUrl(),
+                    'url' =>  $blog->getUrl(),
                 ];
             });
 
