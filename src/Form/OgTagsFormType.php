@@ -2,14 +2,14 @@
 
 namespace App\Form;
 
-use App\Entity\OGTags;
+use App\Entity\OgTags;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class OGTagsFormType extends AbstractType
+class OgTagsFormType extends AbstractType
 {
 
     public function __construct(
@@ -49,7 +49,7 @@ class OGTagsFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => OGTags::class,
+            'data_class' => OgTags::class,
         ]);
     }
 }
