@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
 use App\Entity\Page;
-use App\Form\SeoFormType;
-use App\Form\OGTagsFormType;
+use App\Admin\Field\EmbededFormField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -14,7 +15,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -35,22 +35,8 @@ class PageCrudController extends AbstractCrudController
         $updatedAt = DateTimeField::new('updatedAt', 'Aktualizováno');
         $createdAt = DateTimeField::new('createdAt', 'Vytvořeno');
         $isPublished = BooleanField::new('isPublished', 'Aktivní');
-
-        $seo = CollectionField::new('seoCrud', 'SEO')
-            ->addCssClass('only-one-form-in-collection')
-            ->allowAdd(true)
-            ->renderExpanded()
-            ->allowDelete(false)
-            ->setEntryIsComplex(true)
-            ->setEntryType(SeoFormType::class);
-
-        $ogTags = CollectionField::new('ogTagsCrud', 'OG tags')
-            ->addCssClass('only-one-form-in-collection')
-            ->allowAdd(true)
-            ->renderExpanded()
-            ->allowDelete(false)
-            ->setEntryIsComplex(true)
-            ->setEntryType(OGTagsFormType::class);
+        $seo = EmbededFormField::new('seo');
+        $ogTags = EmbededFormField::new('ogTags');
         
         if (Action::EDIT === $pageName || Action::NEW === $pageName) {
             return [
@@ -77,8 +63,8 @@ class PageCrudController extends AbstractCrudController
                 $title->setTemplatePath('admin/crud_fields/title_with_url_field.html.twig'),
                 $shortBody->setTemplatePath('admin/crud_fields/modal_text_field.html.twig'),
                 $body->setTemplatePath('admin/crud_fields/modal_text_field.html.twig'),
-                $seo->setTemplatePath('admin/crud_fields/page/seo_modal_collection_field.html.twig'),
-                $ogTags->setTemplatePath('admin/crud_fields/page/ogtags_modal_collection_field.html.twig'),
+                $seo,
+                $ogTags,
                 $updatedAt->setTemplatePath('admin/crud_fields/timestampable_field.html.twig'),
                 $isPublished,
             ];
@@ -129,7 +115,6 @@ class PageCrudController extends AbstractCrudController
     public function configureAssets(Assets $assets): Assets
     {
         return $assets
-            ->addAssetMapperEntry('one-form-collection-field')
             ;
     }
 }

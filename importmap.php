@@ -16,10 +16,6 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    'one-form-collection-field' => [
-        'path' => './assets/one-form-collection-field.js',
-        'entrypoint' => true,
-    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],

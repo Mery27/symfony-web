@@ -1,26 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\BasicEntity;
 
-use App\Entity\Seo;
-use App\Entity\OGTags;
-use App\Entity\Trait\OGTagsFormCollectionFieldTrait;
-use App\Entity\Trait\SeoFormCollectionFieldTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Trait\SeoFieldTrait;
+use App\Entity\Trait\OgTagsFieldTrait;
 use App\Entity\Trait\TimestampableTrait;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping\MappedSuperclass;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[MappedSuperclass]
 #[UniqueEntity('url', 'Tato "{{ value }}" url adresa se už používá. Zadejte prosím jinou.')]
 #[ORM\HasLifecycleCallbacks]
 class BasicPage
 {
-
     use TimestampableTrait;
-    use SeoFormCollectionFieldTrait;
-    use OGTagsFormCollectionFieldTrait;
+    use SeoFieldTrait;
+    use OgTagsFieldTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -38,12 +37,6 @@ class BasicPage
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $body = null;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'], targetEntity: Seo::class)]
-    private ?Seo $seo = null;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'], targetEntity: OGTags::class)]
-    private ?OGTags $ogTags = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $isPublished = null;
@@ -97,30 +90,6 @@ class BasicPage
     public function setBody(string $body): static
     {
         $this->body = $body;
-
-        return $this;
-    }
-
-    public function getSeo(): Seo|array|null
-    {
-        return $this->seo;
-    }
-
-    public function setSeo(Seo|array|null $seo): static
-    {
-        $this->seo = $seo;
-
-        return $this;
-    }
-
-    public function getOgTags(): ?OGTags
-    {
-        return $this->ogTags;
-    }
-
-    public function setOgTags(?OGTags $ogTags): static
-    {
-        $this->ogTags = $ogTags;
 
         return $this;
     }

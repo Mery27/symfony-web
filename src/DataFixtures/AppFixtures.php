@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Seo;
 use App\Entity\Page;
-use App\Entity\OGTags;
+use App\Entity\OgTags;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use joshtronic\LoremIpsum;
@@ -25,7 +25,7 @@ class AppFixtures extends Fixture
 
             $page = new Page();
             $seo = new Seo();
-            $ogTags = new OGTags();
+            $ogTags = new OgTags();
 
             $page->setTitle("Page " . (string) $i);
             $page->setUrl("page-" . (string) $i);

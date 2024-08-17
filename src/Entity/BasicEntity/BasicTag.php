@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity\BasicEntity;
 
-use App\Entity\Seo;
-use App\Entity\Trait\SeoFormCollectionFieldTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Trait\SeoFieldTrait;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -13,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[UniqueEntity('url', 'Tato "{{ value }}" url adresa se už používá. Zadejte prosím jinou.')]
 class BasicTag
 {
-    use SeoFormCollectionFieldTrait;
+    use SeoFieldTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -28,9 +29,6 @@ class BasicTag
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
-
-    #[ORM\OneToOne(targetEntity: Seo::class, cascade: ['persist', 'remove'])]
-    private ?Seo $seo = null;
 
     public function __tostring(): string
     {
@@ -74,18 +72,6 @@ class BasicTag
     public function setDescription(?string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getSeo(): ?Seo
-    {
-        return $this->seo;
-    }
-
-    public function setSeo(?Seo $seo): static
-    {
-        $this->seo = $seo;
 
         return $this;
     }

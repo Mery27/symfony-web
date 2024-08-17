@@ -23,11 +23,15 @@ class SeoFormType extends AbstractType
 
         $builder
             ->add('title', null, [
-                'help' => 'Délka 50-60 znaků, který se zobrazjí, max 70. Klíčové slova co nejvíce v levé straně. Pro každou stránku unikátní a nejlépe se shodující s nadpisem H1.<a href="https://www.seoprakticky.cz/slovnik-pojmu/title-tag/" target="_blank">více informací</a>'
+                'help' => 'Délka 50-60 znaků, který se zobrazjí, max 70. Klíčové slova co nejvíce v levé straně. Pro každou stránku unikátní a nejlépe se shodující s nadpisem H1.<a href="https://www.seoprakticky.cz/slovnik-pojmu/title-tag/" target="_blank">více informací</a>',
+                'attr' => [
+                    'data-max-length' => 60,
+                ],
             ])
             ->add('description', TextareaType::class, [
                 'attr' => [
-                    'rows' => 4,
+                    'rows' => 2,
+                    'data-max-length' => 160,
                 ],
                 'help' => 'Nepoužívá se v algoritmech pro vyhodnocování stránky. Maximální délka 160 znaků, jedinečný pro každou stránku. Mělo by se jednat o stručné shrnutí obsahu vaší stránky. <a href="https://www.seoprakticky.cz/slovnik-pojmu/meta-description/" target="_blank">více infomací</a>'
             ])

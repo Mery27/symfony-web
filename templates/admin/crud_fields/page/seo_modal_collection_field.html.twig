@@ -1,25 +1,24 @@
 {% extends "admin/crud_fields/layout/_modal_field.html.twig" %}
 
 {% block body %}
-    {% for seo in field.value %}
-        <p>Title: <br>
-            <b>{{ seo.title }}</b>
-        </p>
-        <hr>
-        <p>Description: <br>
-            <b>{{ seo.description }}</b>
-        </p>
-        <hr>
-        <p>Keywords: <br>
-            {{ seo.keywords }}
-        </p>
-        <hr>
-        <p>Author: {{ seo.author }}</p>
-        <hr>
-        <p>Robots: {{ seo.robots }}</p>
-        <hr>
-        <p>Canonical: <b>{{ seo.canonical }}</b></p>
-        <hr>
-        <p>Zobrazit v sitemap.xml: {{ seo.hideInSitemap ? '<i class="fa-solid fa-xmark text-danger fa-xl"></i>' : '<i class="fa-solid fa-check text-success fa-xl"></i>' }}</p>
-    {% endfor %}
+    {% set seo = field.value %}
+    <p>Title: <br>
+        <b>{{ seo.title }}</b>
+    </p>
+    <hr>
+    <p>Description: <br>
+        <b>{{ seo.description }}</b>
+    </p>
+    <hr>
+    <p>Keywords: <br>
+        {{ seo.keywords }}
+    </p>
+    <hr>
+    <p>Author: {{ seo.author }}</p>
+    <hr>
+    <p>Robots: {{ seo.robots }}</p>
+    <hr>
+    <p>Canonical: <b>{{ seo.canonical }}</b></p>
+    <hr>
+    <p>Zobrazit v sitemap.xml: {{ seo.hideInSitemap ? '<i class="fa-solid fa-xmark text-danger fa-xl"></i>' : '<i class="fa-solid fa-check text-success fa-xl"></i>' }}</p>
 {% endblock %}

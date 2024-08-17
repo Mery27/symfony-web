@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\OGTags;
+use App\Entity\OgTags;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<OGTags>
+ * @extends ServiceEntityRepository<OgTags>
  */
-class OGTagsRepository extends ServiceEntityRepository
+class OgTagsRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, OGTags::class);
+        parent::__construct($registry, OgTags::class);
     }
 
     //    /**
-    //     * @return OGTags[] Returns an array of OGTags objects
+    //     * @return OgTags[] Returns an array of OgTags objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class OGTagsRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?OGTags
+    //    public function findOneBySomeField($value): ?OgTags
     //    {
     //        return $this->createQueryBuilder('o')
     //            ->andWhere('o.exampleField = :val')

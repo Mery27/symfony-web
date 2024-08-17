@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\Admin;
 
 use App\Entity\Tag;
-use App\Form\SeoFormType;
+use App\Admin\Field\EmbededFormField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
@@ -25,14 +26,7 @@ class TagCrudController extends AbstractCrudController
         $title = TextField::new('title', 'Název kategorie');
         $url = TextField::new('url', 'URL adresa');
         $description = TextEditorField::new('description', 'Popis kategorie');
-
-        $seo = CollectionField::new('seoCrud', 'SEO')
-            ->addCssClass('only-one-form-in-collection')
-            ->allowAdd(true)
-            ->renderExpanded()
-            ->allowDelete(false)
-            ->setEntryIsComplex(true)
-            ->setEntryType(SeoFormType::class);
+        $seo = EmbededFormField::new('seo');
 
         if (Action::INDEX === $pageName) {
             return [
@@ -102,7 +96,6 @@ class TagCrudController extends AbstractCrudController
     public function configureAssets(Assets $assets): Assets
     {
         return $assets
-            ->addAssetMapperEntry('one-form-collection-field')
             ;
     }
 }

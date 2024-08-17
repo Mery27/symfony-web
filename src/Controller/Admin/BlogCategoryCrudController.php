@@ -103,7 +103,6 @@ class BlogCategoryCrudController extends AbstractCrudController
     public function configureAssets(Assets $assets): Assets
     {
         return $assets
-            ->addAssetMapperEntry('one-form-collection-field')
             ;
     }
 }

@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\OGTagsRepository;
+use App\Repository\OgTagsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: OGTagsRepository::class)]
-class OGTags
+#[ORM\Entity(repositoryClass: OgTagsRepository::class)]
+class OgTags
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
