@@ -31,6 +31,8 @@ class BlogCrudController extends AbstractCrudController
         $id = IdField::new('id', 'ID')->setDisabled();
         $title = TextField::new('title', 'Název článku');
         $url = TextField::new('url', 'URL adresa článku');
+        $image = EmbededFormField::new('image', 'Obrázek')
+            ->setTemplatePath('admin/crud_fields/image_field.html.twig');
         $shortBody = TextEditorField::new('shortBody', 'Úvodní text');
         $body = TextEditorField::new('body', 'Obsah článku');
         $updatedAt = DateTimeField::new('updatedAt', 'Aktualizováno');
@@ -39,7 +41,7 @@ class BlogCrudController extends AbstractCrudController
         $category = AssociationField::new('category', 'Kategorie')
             ->autocomplete();
         $tag = AssociationField::new('tag', 'Štítky')
-        ->autocomplete();
+            ->autocomplete();
         $seo = EmbededFormField::new('seo');
         $ogTags = EmbededFormField::new('ogTags');
 
@@ -54,6 +56,11 @@ class BlogCrudController extends AbstractCrudController
                 $updatedAt,
                 $createdAt,
                 $isPublished,
+                FormField::addTab('Obrázky'),
+                FormField::addFieldset('Obrázek')
+                    ->setHelp('Jedná se o hlavní obrázek článku.')
+                    ->setIcon('image'),
+                $image,
                 FormField::addTab('Obsah'),
                 $body,
                 FormField::addTab('Seo'),
@@ -68,6 +75,7 @@ class BlogCrudController extends AbstractCrudController
         if (Action::INDEX === $pageName) {
             return [
                 $title->setTemplatePath('admin/crud_fields/title_with_url_field.html.twig'),
+                $image,
                 $shortBody->setTemplatePath('admin/crud_fields/modal_text_field.html.twig'),
                 $body->setTemplatePath('admin/crud_fields/modal_text_field.html.twig'),
                 $seo,
