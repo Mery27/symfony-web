@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Blog;
 use App\Admin\Field\EmbededFormField;
+use App\Form\BlogImageGalleryFormType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -18,6 +19,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 
 class BlogCrudController extends AbstractCrudController
 {
@@ -33,6 +35,8 @@ class BlogCrudController extends AbstractCrudController
         $url = TextField::new('url', 'URL adresa článku');
         $image = EmbededFormField::new('image', 'Obrázek')
             ->setTemplatePath('admin/crud_fields/image_field.html.twig');
+        $imageGallery = CollectionField::new('imageGallery', 'Obrázková galerie')
+            ->setEntryType(BlogImageGalleryFormType::class);
         $shortBody = TextEditorField::new('shortBody', 'Úvodní text');
         $body = TextEditorField::new('body', 'Obsah článku');
         $updatedAt = DateTimeField::new('updatedAt', 'Aktualizováno');
@@ -61,6 +65,10 @@ class BlogCrudController extends AbstractCrudController
                     ->setHelp('Jedná se o hlavní obrázek článku.')
                     ->setIcon('image'),
                 $image,
+                FormField::addFieldset('Galerie obrázků')
+                    ->setHelp('Galerie obrázku ke článku.')
+                    ->setIcon('images'),
+                $imageGallery,
                 FormField::addTab('Obsah'),
                 $body,
                 FormField::addTab('Seo'),
@@ -76,6 +84,7 @@ class BlogCrudController extends AbstractCrudController
             return [
                 $title->setTemplatePath('admin/crud_fields/title_with_url_field.html.twig'),
                 $image,
+                $imageGallery->setTemplatePath('admin/crud_fields/modal_collection_field.html.twig')->setLabel('Fotogalerie'),
                 $shortBody->setTemplatePath('admin/crud_fields/modal_text_field.html.twig'),
                 $body->setTemplatePath('admin/crud_fields/modal_text_field.html.twig'),
                 $seo,
