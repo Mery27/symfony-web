@@ -59,7 +59,7 @@ class TagCrudController extends AbstractCrudController
         return $crud
         ->showEntityActionsInlined()
         ->setPageTitle(Crud::PAGE_INDEX, 'Seznam štítků')
-        ->setPageTitle(Crud::PAGE_EDIT, 'Upravit štítek')
+        ->setPageTitle(Crud::PAGE_EDIT, fn(Tag $tag) => 'Upravit štítek <small>' . $tag->getTitle() . '</small>')
         ->setPageTitle(Crud::PAGE_NEW, 'Vytvořit štítek')
         ->setEntityLabelInSingular('Štítek')
         ->setDefaultSort(['title' => 'DESC'])

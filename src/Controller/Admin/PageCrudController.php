@@ -78,7 +78,7 @@ class PageCrudController extends AbstractCrudController
         return $crud
         ->showEntityActionsInlined()
         ->setPageTitle(Crud::PAGE_INDEX, 'Seznam stránek')
-        ->setPageTitle(Crud::PAGE_EDIT, 'Upravit stránku')
+        ->setPageTitle(Crud::PAGE_EDIT, fn(Page $page) => 'Upravit stránku <small>' . $page->getTitle() . '</small>')
         ->setEntityLabelInSingular('Stránka')
         ->setDefaultSort(['createdAt' => 'DESC'])
         ->setDateTimeFormat($this->getParameter('date_format_long'))

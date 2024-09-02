@@ -1,0 +1,11 @@
+{% extends "admin/crud_fields/layout/_modal_field.html.twig" %}
+
+{% block body %}
+	{% for item in field.value %}
+		{% set imageObj = entity.instance.image %}
+		<div class="my-2">
+			<img src="{{ vich_uploader_asset(imageObj, 'imageFile') }}" alt="{{ imageObj.imageTitle }}" class="img-fluid">
+			<p class="mt-1">{{ item.imageName ?? item.image }}</p>
+		</div>
+	{% endfor %}
+{% endblock %}

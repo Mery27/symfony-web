@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Blog;
 use App\Admin\Field\EmbededFormField;
+use App\Form\BlogImageGalleryFormType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -18,6 +19,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 
 class BlogCrudController extends AbstractCrudController
 {
@@ -31,6 +33,10 @@ class BlogCrudController extends AbstractCrudController
         $id = IdField::new('id', 'ID')->setDisabled();
         $title = TextField::new('title', 'Název článku');
         $url = TextField::new('url', 'URL adresa článku');
+        $image = EmbededFormField::new('image', 'Obrázek')
+            ->setTemplatePath('admin/crud_fields/image_field.html.twig');
+        $imageGallery = CollectionField::new('imageGallery', 'Obrázková galerie')
+            ->setEntryType(BlogImageGalleryFormType::class);
         $shortBody = TextEditorField::new('shortBody', 'Úvodní text');
         $body = TextEditorField::new('body', 'Obsah článku');
         $updatedAt = DateTimeField::new('updatedAt', 'Aktualizováno');
@@ -39,7 +45,7 @@ class BlogCrudController extends AbstractCrudController
         $category = AssociationField::new('category', 'Kategorie')
             ->autocomplete();
         $tag = AssociationField::new('tag', 'Štítky')
-        ->autocomplete();
+            ->autocomplete();
         $seo = EmbededFormField::new('seo');
         $ogTags = EmbededFormField::new('ogTags');
 
@@ -54,6 +60,15 @@ class BlogCrudController extends AbstractCrudController
                 $updatedAt,
                 $createdAt,
                 $isPublished,
+                FormField::addTab('Obrázky'),
+                FormField::addFieldset('Obrázek')
+                    ->setHelp('Jedná se o hlavní obrázek článku.')
+                    ->setIcon('image'),
+                $image,
+                FormField::addFieldset('Galerie obrázků')
+                    ->setHelp('Galerie obrázku ke článku.')
+                    ->setIcon('images'),
+                $imageGallery,
                 FormField::addTab('Obsah'),
                 $body,
                 FormField::addTab('Seo'),
@@ -68,6 +83,8 @@ class BlogCrudController extends AbstractCrudController
         if (Action::INDEX === $pageName) {
             return [
                 $title->setTemplatePath('admin/crud_fields/title_with_url_field.html.twig'),
+                $image,
+                $imageGallery->setTemplatePath('admin/crud_fields/modal_collection_field.html.twig')->setLabel('Fotogalerie'),
                 $shortBody->setTemplatePath('admin/crud_fields/modal_text_field.html.twig'),
                 $body->setTemplatePath('admin/crud_fields/modal_text_field.html.twig'),
                 $seo,
@@ -85,7 +102,7 @@ class BlogCrudController extends AbstractCrudController
         return $crud
         ->showEntityActionsInlined()
         ->setPageTitle(Crud::PAGE_INDEX, 'Seznam článků')
-        ->setPageTitle(Crud::PAGE_EDIT, 'Upravit článek')
+        ->setPageTitle(Crud::PAGE_EDIT, fn (Blog $blog) => 'Upravit článek <small>' . $blog->getTitle() . '</small>')
         ->setPageTitle(Crud::PAGE_NEW, 'Vytvořit článek')
         ->setEntityLabelInSingular('Článek')
         ->setDefaultSort(['createdAt' => 'DESC'])

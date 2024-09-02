@@ -28,6 +28,11 @@ class BasicImageGallery extends VichUploaderImage
     #[ORM\Column]
     private ?bool $isActive = false;
 
+    public function __tostring(): string
+    {
+        return $this->imageName ?? $this->image;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
