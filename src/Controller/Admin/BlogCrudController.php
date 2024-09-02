@@ -102,7 +102,7 @@ class BlogCrudController extends AbstractCrudController
         return $crud
         ->showEntityActionsInlined()
         ->setPageTitle(Crud::PAGE_INDEX, 'Seznam článků')
-        ->setPageTitle(Crud::PAGE_EDIT, 'Upravit článek')
+        ->setPageTitle(Crud::PAGE_EDIT, fn (Blog $blog) => 'Upravit článek <small>' . $blog->getTitle() . '</small>')
         ->setPageTitle(Crud::PAGE_NEW, 'Vytvořit článek')
         ->setEntityLabelInSingular('Článek')
         ->setDefaultSort(['createdAt' => 'DESC'])
