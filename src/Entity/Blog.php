@@ -26,7 +26,7 @@ class Blog extends BasicPage
     /**
      * @var Collection<int, BlogImageGallery>
      */
-    #[ORM\OneToMany(targetEntity: BlogImageGallery::class, mappedBy: 'blog', cascade: ['persist', 'remove'])]
+    #[ORM\OneToMany(targetEntity: BlogImageGallery::class, mappedBy: 'blog', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $imageGallery;
 
     public function __construct()
