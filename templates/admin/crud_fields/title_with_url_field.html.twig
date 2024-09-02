@@ -4,6 +4,7 @@
 {% set page = entity.instance %}
 {# Return snake case entity name BlogCategory -> blog_category #}
 {% set entity_name = ea.entity.name|u.snake %}
+{% set url = path('app_' ~ entity_name ~ '_show', {'url': page.url}) %}
 
 <span><b>{{ field.value }}</b></span><br>
-<small>URL: <a href="{{ path('app_' ~ entity_name ~ '_show', {'url': page.url}) }}" class="text-decoration-underline">{{ page.url }}</a></small>
+<small>URL: <a href="{{ url }}" class="text-decoration-underline">{{ url }}</a></small>
