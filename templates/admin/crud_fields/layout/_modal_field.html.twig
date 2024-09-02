@@ -1,7 +1,7 @@
 {# {% if ea.crud.currentAction == 'index' or ea.crud.currentAction == 'detail' %} #}
 {% if ea.crud.currentAction == 'index' %}
 
-	{% if field.value %}
+	{% if field.value|length > 0 %}
 		<a class="btn btn-secondary" data-bs-target="#modal-{{ field.uniqueId }}" data-bs-toggle="modal" href="#"><i class="far fa-comment-alt"></i></a>
 
 		<div class="modal fade" id="modal-{{ field.uniqueId }}" tabindex="-1" role="modal" aria-labelledby="modal-label-{{ field.uniqueId }}" aria-hidden="true" style="display: none;">
@@ -25,7 +25,7 @@
 			</div>
 		</div>
 	{% else %}
-		<span class="text-secondary"><small>-</small></span>
+        {% include "/admin/crud_fields/layout/_index_empty_field.html.twig" %}
 	{% endif %}
 
 {% else %}
